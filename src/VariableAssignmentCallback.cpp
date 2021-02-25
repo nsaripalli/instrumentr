@@ -13,11 +13,13 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP VariableAssignmentCallback::class_ = nullptr;
 
 void VariableAssignmentCallback::initialize() {
+    fprintf(stderr, "VariableAssignmentCallback intialize /n");
     class_ = Callback::create_class("instrumentr_variable_assignment_callback");
     R_PreserveObject(class_);
 }
 
 void VariableAssignmentCallback::finalize() {
+    fprintf(stderr, "VariableAssignmentCallback finalize /n");
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -33,6 +35,7 @@ void VariableAssignmentCallback::invoke(SEXP r_context,
                                         SEXP r_rho) {
     ContextSPtr context = from_sexp<Context>(r_context);
 
+    fprintf(stderr, "VariableAssignmentCallback invoke /n");
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);
 

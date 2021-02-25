@@ -23,11 +23,15 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP FunctionDetachCallback::class_ = nullptr;
 
 void FunctionDetachCallback::initialize() {
+    fprintf(stderr, "FunctionDetachCallback Initalize /n");
+
     class_ = Callback::create_class("instrumentr_function_detach_callback");
     R_PreserveObject(class_);
 }
 
 void FunctionDetachCallback::finalize() {
+    fprintf(stderr, "FunctionDetachCallback Finalize /n");
+
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -41,6 +45,7 @@ void FunctionDetachCallback::invoke(SEXP r_context,
                                     SEXP r_package,
                                     SEXP r_function) {
     ContextSPtr context = from_sexp<Context>(r_context);
+    fprintf(stderr, "FunctionDetachCallback Invoke /n");
 
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);

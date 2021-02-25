@@ -28,6 +28,7 @@ void GcUnmarkCallback::invoke(SEXP r_context,
                               SEXP r_application,
                               SEXP r_object) {
     ContextSPtr context = from_sexp<Context>(r_context);
+    fprintf(stderr, "GC Unmark Callback /n");
 
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);

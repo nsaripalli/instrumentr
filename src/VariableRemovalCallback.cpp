@@ -12,11 +12,13 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP VariableRemovalCallback::class_ = nullptr;
 
 void VariableRemovalCallback::initialize() {
+    fprintf(stderr, "VariableRemovalCallback initialize /n");
     class_ = Callback::create_class("instrumentr_variable_removal_callback");
     R_PreserveObject(class_);
 }
 
 void VariableRemovalCallback::finalize() {
+    fprintf(stderr, "VariableRemovalCallback finalize /n");
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -31,6 +33,7 @@ void VariableRemovalCallback::invoke(SEXP r_context,
                                      SEXP r_rho) {
     ContextSPtr context = from_sexp<Context>(r_context);
 
+    fprintf(stderr, "VariableRemovalCallback invoke /n");
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);
 

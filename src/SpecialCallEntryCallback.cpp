@@ -15,11 +15,13 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP SpecialCallEntryCallback::class_ = nullptr;
 
 void SpecialCallEntryCallback::initialize() {
+    fprintf(stderr, "SpecialCallEntryCallback init /n");
     class_ = Callback::create_class("instrumentr_special_call_entry_callback");
     R_PreserveObject(class_);
 }
 
 void SpecialCallEntryCallback::finalize() {
+    fprintf(stderr, "SpecialCallEntryCallback finalize /n");
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -37,6 +39,7 @@ void SpecialCallEntryCallback::invoke(SEXP r_context,
                                       SEXP r_args,
                                       SEXP r_rho) {
     ContextSPtr context = from_sexp<Context>(r_context);
+    fprintf(stderr, "SpecialCallEntryCallback invoke /n");
 
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);

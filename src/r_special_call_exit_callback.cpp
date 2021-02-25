@@ -5,11 +5,15 @@
 using instrumentr::SpecialCallExitCallback;
 
 SEXP r_special_call_exit_callback_create_from_r_function(SEXP r_function) {
+    fprintf(stderr, "r_special_call_exit_callback_create_from_r_function /n");
+
     return r_callback_create_from_r_function<SpecialCallExitCallback>(
         r_function);
 }
 
 SEXP r_special_call_exit_callback_create_from_c_function(SEXP r_c_function) {
+    fprintf(stderr, "r_special_call_exit_callback_create_from_c_function /n");
+
     return r_callback_create_from_c_function<SpecialCallExitCallback>(
         r_c_function);
 }

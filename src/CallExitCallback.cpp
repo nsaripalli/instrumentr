@@ -27,11 +27,15 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP CallExitCallback::class_ = nullptr;
 
 void CallExitCallback::initialize() {
+    fprintf(stderr, "Call Initilaize /n");
+
     class_ = Callback::create_class("instrumentr_call_exit_callback");
     R_PreserveObject(class_);
 }
 
 void CallExitCallback::finalize() {
+    fprintf(stderr, "Finalize /n");
+
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -46,6 +50,11 @@ void CallExitCallback::invoke(SEXP r_context,
                               SEXP r_function,
                               SEXP r_call) {
     ContextSPtr context = from_sexp<Context>(r_context);
+
+    fprintf(stderr, "Call Exit Callback /n");
+    SEXP r_function_name = get_function_name();
+    const std::string name(CHAR(asChar(r_function_name)));
+    fprintf(stderr, name.c_str());
 
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);

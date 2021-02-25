@@ -13,11 +13,13 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP VariableLookupCallback::class_ = nullptr;
 
 void VariableLookupCallback::initialize() {
+    fprintf(stderr, "VariableLookupCallback initialize /n");
     class_ = Callback::create_class("instrumentr_variable_lookup_callback");
     R_PreserveObject(class_);
 }
 
 void VariableLookupCallback::finalize() {
+    fprintf(stderr, "VariableLookupCallback finalize /n");
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -33,6 +35,7 @@ void VariableLookupCallback::invoke(SEXP r_context,
                                     SEXP r_rho) {
     ContextSPtr context = from_sexp<Context>(r_context);
 
+    fprintf(stderr, "VariableLookupCallback invoke /n");
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);
 

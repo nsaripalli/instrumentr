@@ -15,16 +15,19 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP BuiltinCallEntryCallback::class_ = nullptr;
 
 void BuiltinCallEntryCallback::initialize() {
+    fprintf(stderr, "BuiltinCallEntryCallback /n");
     class_ = Callback::create_class("instrumentr_builtin_call_entry_callback");
     R_PreserveObject(class_);
 }
 
 void BuiltinCallEntryCallback::finalize() {
+    fprintf(stderr, "BuiltinCallEntryCallback /n");
     R_ReleaseObject(class_);
     class_ = NULL;
 }
 
 SEXP BuiltinCallEntryCallback::get_class() {
+    fprintf(stderr, "Getting Built in Call Entery /n");
     return class_;
 }
 
@@ -37,6 +40,12 @@ void BuiltinCallEntryCallback::invoke(SEXP r_context,
                                       SEXP r_args,
                                       SEXP r_rho) {
     ContextSPtr context = from_sexp<Context>(r_context);
+
+    fprintf(stderr, "Invoking Built in Call /n");
+    SEXP r_function_name = get_function_name();
+    const std::string name(CHAR(asChar(r_function_name)));
+    fprintf(stderr, name.c_str());
+
 
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);

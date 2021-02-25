@@ -18,6 +18,8 @@ using instrumentr::to_sexp;
 ArgumentSPtr create_argument(SEXP r_argument_name,
                              SEXP r_argument_value,
                              SEXP r_environment) {
+    fprintf(stderr, "R create Argument /n");
+
     /* value (promise optimized away by compiler)  */
     if (TYPEOF(r_argument_value) != PROMSXP) {
         SEXP r_argument_name_str =
@@ -41,6 +43,8 @@ SEXP r_call_create_call(SEXP r_function,
                         SEXP r_call_expression,
                         SEXP r_environment,
                         SEXP r_frame_position) {
+    fprintf(stderr, "R call create call /n");
+
     FunctionSPtr function = from_sexp<Function>(r_function);
     int frame_position = asInteger(r_frame_position);
     CallSPtr call = std::make_shared<Call>(

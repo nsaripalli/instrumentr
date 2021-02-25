@@ -5,11 +5,13 @@
 using instrumentr::VariableRemovalCallback;
 
 SEXP r_variable_removal_callback_create_from_r_function(SEXP r_function) {
+    fprintf(stderr, "r_variable_removal_callback_create_from_r_function /n");
     return r_callback_create_from_r_function<VariableRemovalCallback>(
         r_function);
 }
 
 SEXP r_variable_removal_callback_create_from_c_function(SEXP r_c_function) {
+    fprintf(stderr, "r_variable_removal_callback_create_from_c_function /n");
     return r_callback_create_from_c_function<VariableRemovalCallback>(
         r_c_function);
 }

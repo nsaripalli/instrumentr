@@ -14,6 +14,8 @@ SEXP r_function_create_function(SEXP r_name,
                                 SEXP r_public,
                                 SEXP r_s3_generic,
                                 SEXP r_s3_method) {
+    fprintf(stderr, "r_function_create_function");
+
     std::string name = CHAR(asChar(r_name));
     int parameter_count = asInteger(r_parameter_count);
     bool pub = asLogical(r_public);

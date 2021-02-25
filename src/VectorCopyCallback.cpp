@@ -12,11 +12,13 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP VectorCopyCallback::class_ = nullptr;
 
 void VectorCopyCallback::initialize() {
+    fprintf(stderr, "VectorCopyCallback initialize /n");
     class_ = Callback::create_class("instrumentr_vector_copy_callback");
     R_PreserveObject(class_);
 }
 
 void VectorCopyCallback::finalize() {
+    fprintf(stderr, "VectorCopyCallback finalize /n");
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -31,6 +33,7 @@ void VectorCopyCallback::invoke(SEXP r_context,
                                 SEXP r_output) {
     ContextSPtr context = from_sexp<Context>(r_context);
 
+    fprintf(stderr, "VectorCopyCallback invoke /n");
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);
 

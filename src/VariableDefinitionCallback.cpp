@@ -13,11 +13,13 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP VariableDefinitionCallback::class_ = nullptr;
 
 void VariableDefinitionCallback::initialize() {
+    fprintf(stderr, "VariableDefinitionCallback initialize /n");
     class_ = Callback::create_class("instrumentr_variable_definition_callback");
     R_PreserveObject(class_);
 }
 
 void VariableDefinitionCallback::finalize() {
+    fprintf(stderr, "VariableDefinitionCallback finalize /n");
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -33,6 +35,7 @@ void VariableDefinitionCallback::invoke(SEXP r_context,
                                         SEXP r_rho) {
     ContextSPtr context = from_sexp<Context>(r_context);
 
+    fprintf(stderr, "VariableDefinitionCallback invoke /n");
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);
 

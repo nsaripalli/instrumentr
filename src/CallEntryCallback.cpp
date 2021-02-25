@@ -47,6 +47,10 @@ void CallEntryCallback::invoke(SEXP r_context,
                                SEXP r_call) {
     ContextSPtr context = from_sexp<Context>(r_context);
 
+    fprintf(stderr, "CallEntryCallback Invoke /n");
+    SEXP r_function_name = get_function_name();
+    const std::string name(CHAR(asChar(r_function_name)));
+    fprintf(stderr, name.c_str());
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);
         PackageSPtr package = from_sexp<Package>(r_package);

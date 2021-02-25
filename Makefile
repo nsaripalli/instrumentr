@@ -1,7 +1,7 @@
 R := R
 SOURCEDIR := src
 INCLUDEDIR := inst/include
-DOCKER := docker
+DOCKER := podman
 
 SOURCES := $(shell find $(SOURCEDIR) -name '*.cpp')
 INCLUDES := $(shell find $(INCLUDEDIR) -name '*.hpp') $(shell find $(SOURCEDIR) -name '*.h')

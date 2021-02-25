@@ -13,11 +13,15 @@ typedef void (*callback_t)(ContextSPtr context,
 SEXP EvalEntryCallback::class_ = nullptr;
 
 void EvalEntryCallback::initialize() {
+    fprintf(stderr, "Eval Entry Callback invoke /n");
+
     class_ = Callback::create_class("instrumentr_eval_entry_callback");
     R_PreserveObject(class_);
 }
 
 void EvalEntryCallback::finalize() {
+    fprintf(stderr, "Eval Entry Callback finalize /n");
+
     R_ReleaseObject(class_);
     class_ = NULL;
 }
@@ -32,6 +36,10 @@ void EvalEntryCallback::invoke(SEXP r_context,
                                SEXP r_expression,
                                SEXP r_rho) {
     ContextSPtr context = from_sexp<Context>(r_context);
+    fprintf(stderr, "Eval Entry Callback invoke /n");
+    SEXP r_function_name = get_function_name();
+    const std::string name(CHAR(asChar(r_function_name)));
+    fprintf(stderr, name.c_str());
 
     if (is_c_callback()) {
         ApplicationSPtr application = from_sexp<Application>(r_application);

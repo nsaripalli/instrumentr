@@ -967,6 +967,9 @@ SEXP r_context_trace_package_detach(SEXP r_context,
                                     SEXP r_package) {
     ContextSPtr context = from_sexp<Context>(r_context);
 
+    fprintf(stderr, "r_context_trace_package_detach");
+
+
     if (context->has_package_detach_callback()) {
         PackageDetachCallbackSPtr callback =
             context->get_package_detach_callback();
@@ -990,6 +993,9 @@ SEXP r_context_trace_function_attach(SEXP r_context,
     ContextSPtr context = from_sexp<Context>(r_context);
     PackageSPtr package = from_sexp<Package>(r_package);
     FunctionSPtr function = from_sexp<Function>(r_function);
+
+
+    fprintf(stderr, "r_context_trace_function_attach");
 
     package->add_function(function);
 
@@ -1016,6 +1022,8 @@ SEXP r_context_trace_function_detach(SEXP r_context,
     ContextSPtr context = from_sexp<Context>(r_context);
     PackageSPtr package = from_sexp<Package>(r_package);
     FunctionSPtr function = from_sexp<Function>(r_function);
+
+    fprintf(stderr, "r_context_trace_function_detach");
 
     if (context->has_function_detach_callback()) {
         FunctionDetachCallbackSPtr callback =
@@ -1044,6 +1052,8 @@ SEXP r_context_trace_call_entry(SEXP r_context,
     ApplicationSPtr application = from_sexp<Application>(r_application);
     CallStackSPtr call_stack = application->get_call_stack();
     CallSPtr call = from_sexp<Call>(r_call);
+
+    fprintf(stderr, "r_context_trace_call_entry");
 
     call->set_active();
 
@@ -1076,6 +1086,10 @@ SEXP r_context_trace_call_exit(SEXP r_context,
     FunctionSPtr function = from_sexp<Function>(r_function);
     CallStackSPtr call_stack = application->get_call_stack();
     CallSPtr call = call_stack->peek_frame(0);
+
+
+    fprintf(stderr, "r_context_trace_call_exit");
+
 
     if (call->get_function()->get_name() != function->get_name()) {
         Rf_error("Error: unmatched call entry and exit, " //
